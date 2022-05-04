@@ -1,15 +1,28 @@
 import React, { useState } from "react";
-import HeaderRegister from "./Components/Header";
 import { GlobalStyle } from "./Components/GlobalStyle";
-import PacientForm from "./Components/Form";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom"
+import HeaderRegister from "./Components/Header";
+import PacientForm from './view/register'
+import PacientManagement from './view/management'
+import Pagina404 from './Components/Page404'
+// import PageActive from "./Components/Paginations";
+
 
 function App() {
   return (
-    <div>
+    <BrowserRouter>
             <GlobalStyle />
             <HeaderRegister />
-            <PacientForm />
-    </div>
+           <Routes>
+                <Route  path="/" element={<PacientForm />}/>
+                <Route path="/management" element={<PacientManagement />}/>
+                <Route  path="*" element={<Pagina404 />}/>
+           </Routes> 
+    </BrowserRouter>
          
   );
 }
