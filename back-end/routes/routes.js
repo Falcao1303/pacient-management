@@ -1,9 +1,12 @@
 const route = require('express').Router()
+const Register = require('../models/project')
 
-    route.get('/',async  (req,res) =>{
-    res.send(
-        "Hello World"
-    )         
+    route.post('/pacient/',(req,res) =>{
+        Register.save(req.body);
+    })
+
+    route.get('/pacient/getRegisters', (req,res) =>{
+        Register.lista(res);
     })
 
 module.exports = route
