@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -33,19 +35,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData(1, 'João Paulo', 6.0, 24, 4.0),
-  createData(2, 'Maria Luiza', 9.0, 37, 4.3),
-  createData(3, 'Pedro Andrade', 16.0, 24, 6.0),
-  createData(4, 'Henrique Souza', 3.7, 67, 4.3),
-  createData(5, 'Julia Alves', 16.0, 49, 3.9),
-];
 
 export default function CustomizedTables() {
+const [registers, setRegisters] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/pacient/getRegisters/').then((response) => {
+      setRegisters(response.data);
+    })
+  })
   return (
     <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
          <TableContainer component={Paper}  maxWidth="lg" sx={{ mb: 10 , w: -50}}>
@@ -57,20 +55,28 @@ export default function CustomizedTables() {
           <TableRow>
             <StyledTableCell>Pacient Id</StyledTableCell>
             <StyledTableCell align="center">Name</StyledTableCell>
-            <StyledTableCell align="center">Contact</StyledTableCell>
             <StyledTableCell align="center">Adress</StyledTableCell>
+            <StyledTableCell align="center">City</StyledTableCell>
+            <StyledTableCell align="center">State</StyledTableCell>
+            <StyledTableCell align="center">Zip Code</StyledTableCell>
+            <StyledTableCell align="center">Country</StyledTableCell>
             <StyledTableCell align="center">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.name}>
+          {registers.map((row) => (
+            <StyledTableRow key={row.id}>
+              <StyledTableCell component="th" scope="row">
+                {row.id}
+              </StyledTableCell>
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="center">{row.calories}</StyledTableCell>
-              <StyledTableCell align="center">{row.fat}</StyledTableCell>
-              <StyledTableCell align="center">{row.carbs}</StyledTableCell>
+              <StyledTableCell align="center">{row.adress}</StyledTableCell>
+              <StyledTableCell align="center">{row.city}</StyledTableCell>
+              <StyledTableCell align="center">{row.state}</StyledTableCell>
+              <StyledTableCell align="center">{row.postalcode}</StyledTableCell>
+              <StyledTableCell align="center">{row.country}</StyledTableCell>
               <StyledTableCell align="center"><IconButton aria-label="delete">
                                               <DeleteIcon />
                                               </IconButton>

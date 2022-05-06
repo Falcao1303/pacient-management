@@ -1,13 +1,36 @@
 import * as React from 'react';
+import { useEffect, useState } from "react";
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+import axios from 'axios';
 
 
 export default function PacientForm() {
+  const [values, setValues] = useState();
+  const handleaddValues = (value) => {
+    setValues((prevValues) => ({
+      ...prevValues,
+      [value.target.name]: value.target.value,
+    }));
+  };
+
+  const saveRegister = () => {
+    axios.post('http://localhost:3001/api/pacient/', {
+      name: values.name,
+      email: values.email,
+      adress: values.address,
+      city: values.city,
+      state: values.state,
+      zip: values.zip,
+      country: values.country,
+    }).then((response) => {
+      console.log(response);
+    })
+  }
+
   return (
 
     <React.Fragment>
@@ -16,37 +39,28 @@ export default function PacientForm() {
         Register
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={10} sm={6}>
+        <Grid item xs={10} sm={10}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="name"
+            name="name"
+            label="name"
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Grid item xs={10} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={10} sm={6}>
-          <TextField
-            required
-            id="address1"
-            name="address1"
-            label="Address line 1"
+            id="address"
+            name="address"
+            label="Address"
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Grid item xs={10} sm={6}>
@@ -61,6 +75,7 @@ export default function PacientForm() {
             fullWidth
             autoComplete="shipping address-level2"
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Grid item xs={10} sm={6}>
@@ -70,6 +85,7 @@ export default function PacientForm() {
             label="State/Province/Region"
             fullWidth
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Grid item xs={10} sm={6}>
@@ -81,6 +97,7 @@ export default function PacientForm() {
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Grid item xs={10} sm={6}>
@@ -92,11 +109,12 @@ export default function PacientForm() {
             fullWidth
             autoComplete="shipping country"
             variant="standard"
+            onChange={handleaddValues}
           />
         </Grid>
         <Button
             variant="contained"
-            onClick={''}
+            onClick={() => saveRegister()}
             sx={{ mt: 3, ml: 1 }}
             >
         {'Submit'}
