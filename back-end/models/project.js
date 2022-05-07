@@ -28,7 +28,6 @@ class Register {
                 res.status(400).json(err)
             }else{
                 res.status(200).json(response)
-                res.end;
             }
         })
     }

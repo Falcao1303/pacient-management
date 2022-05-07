@@ -14,6 +14,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
+import FormEditRegister from '../Components/Modal';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,6 +39,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
 const [registers, setRegisters] = useState([]);
+const [open, setOpen] = React.useState(false);
+const [recordForEdit, setRecordForEdit] = useState(null);
+
+const OpenModalEdit = (row) => {
+    setRecordForEdit(row);
+    setOpen(true);
+}
+
 
   useEffect(() => {
     axios.get('http://localhost:3001/api/pacient/getRegisters/').then((response) => {
@@ -45,12 +54,14 @@ const [registers, setRegisters] = useState([]);
     })
   })
   return (
-    <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
+    <>
+        <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
          <TableContainer component={Paper}  maxWidth="lg" sx={{ mb: 10 , w: -50}}>
    <Typography variant="h6" gutterBottom>
     Management
      </Typography>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
+  
         <TableHead>
           <TableRow>
             <StyledTableCell>Pacient Id</StyledTableCell>
@@ -65,7 +76,7 @@ const [registers, setRegisters] = useState([]);
         </TableHead>
         <TableBody>
           {registers.map((row) => (
-            <StyledTableRow key={row.id}>
+          <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
               </StyledTableCell>
@@ -77,19 +88,27 @@ const [registers, setRegisters] = useState([]);
               <StyledTableCell align="center">{row.state}</StyledTableCell>
               <StyledTableCell align="center">{row.postalcode}</StyledTableCell>
               <StyledTableCell align="center">{row.country}</StyledTableCell>
-              <StyledTableCell align="center"><IconButton aria-label="delete">
+              <StyledTableCell align="center">
+                <IconButton aria-label="delete">
                                               <DeleteIcon />
                                               </IconButton>
                                               <IconButton>
-                                              <ModeEditIcon />
+                                              <ModeEditIcon  onClick= {() => OpenModalEdit(row) 
+                                              }/>
                                               </IconButton>
               </StyledTableCell>
             </StyledTableRow>
+
+
+            
           ))}
         </TableBody>
       </Table>
     </TableContainer>
     </Container>
+    <FormEditRegister open={open} setOpen= {setOpen}  recordForEdit={recordForEdit}/>
+    </>
+
  
   );
 }

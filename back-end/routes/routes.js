@@ -7,6 +7,7 @@ const Register = require('../models/project')
 
     route.get('/pacient/getRegisters', (req,res) =>{
         Register.lista(res);
+        req.end;
     })
 
 module.exports = route
