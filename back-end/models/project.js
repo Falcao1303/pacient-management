@@ -52,6 +52,19 @@ class Register {
         })
     }
 
+    delete(id){
+        const idpacient = id.id;
+        db.query('DELETE FROM pacients WHERE id=? ', [idpacient], (err, results) => {
+            if(err){
+                console.log(err)
+            }else{
+               console.log(results);
+            }
+        })
+    }
+
+    
+
 
 }
 

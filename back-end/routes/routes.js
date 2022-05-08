@@ -3,6 +3,11 @@ const Register = require('../models/project')
 
     route.post('/pacient/',(req,res) =>{
         Register.save(req.body);
+        res.send(
+            {dados: req.body,
+            message: "sucesso"}
+            
+        )
     })
 
     route.get('/pacient/getRegisters', (req,res) =>{
@@ -11,8 +16,12 @@ const Register = require('../models/project')
     })
 
     route.put('/pacient/update/register/', (req,res) =>{
-        console.log(req.body);
         Register.update(req.body);
+    })
+
+    route.delete('/pacient/delete/:id', (req,res) =>{
+        const id = req.params;
+        Register.delete(id);
     })
 
 module.exports = route
