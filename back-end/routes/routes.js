@@ -10,4 +10,9 @@ const Register = require('../models/project')
         req.end;
     })
 
+    route.put('/pacient/update/register/', (req,res) =>{
+        console.log(req.body);
+        Register.update(req.body);
+    })
+
 module.exports = route
