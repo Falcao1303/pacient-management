@@ -9,7 +9,6 @@ import HeaderRegister from "./Components/Header";
 import PacientForm from './view/register'
 import PacientManagement from './view/management'
 import Pagina404 from './Components/Page404'
-// import PageActive from "./Components/Paginations";
 
 
 function App() {

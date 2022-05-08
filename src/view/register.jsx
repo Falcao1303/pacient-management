@@ -8,14 +8,30 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 
 
+const initialFValues = {
+  id: '',
+  name:  '',
+  address:'',
+  city:  '',
+  state: '',
+  zip:    '',
+  country:'',
+}
 export default function PacientForm() {
-  const [values, setValues] = useState();
+  const [values, setValues] = useState(initialFValues);
+  
+
   const handleaddValues = (value) => {
     setValues((prevValues) => ({
       ...prevValues,
       [value.target.name]: value.target.value,
     }));
   };
+
+  const resetForm = () => {
+    console.log('reset chamou');
+    setValues(initialFValues);
+}
 
   const saveRegister = () => {
     axios.post('http://localhost:3001/api/pacient/', {
@@ -27,7 +43,8 @@ export default function PacientForm() {
       zip: values.zip,
       country: values.country,
     }).then((response) => {
-      console.log(response);
+      console.log("sucesso");
+      resetForm();
     })
   }
 
@@ -44,9 +61,11 @@ export default function PacientForm() {
             required
             id="name"
             name="name"
-            label="name"
+            label="Name"
             fullWidth
+            value = {values.name}
             autoComplete="given-name"
+            defaultValue={resetForm}
             variant="standard"
             onChange={handleaddValues}
           />
@@ -56,6 +75,7 @@ export default function PacientForm() {
             required
             id="address"
             name="address"
+            value = {values.address}
             label="Address"
             fullWidth
             autoComplete="shipping address-line1"
@@ -71,6 +91,7 @@ export default function PacientForm() {
             required
             id="city"
             name="city"
+            value = {values.city}
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
@@ -82,6 +103,7 @@ export default function PacientForm() {
           <TextField
             id="state"
             name="state"
+            value = {values.state}
             label="State/Province/Region"
             fullWidth
             variant="standard"
@@ -93,8 +115,10 @@ export default function PacientForm() {
             required
             id="zip"
             name="zip"
+            value = {values.zip}
             label="Zip / Postal code"
             fullWidth
+
             autoComplete="shipping postal-code"
             variant="standard"
             onChange={handleaddValues}
@@ -107,6 +131,7 @@ export default function PacientForm() {
             name="country"
             label="Country"
             fullWidth
+            value={values.country}
             autoComplete="shipping country"
             variant="standard"
             onChange={handleaddValues}

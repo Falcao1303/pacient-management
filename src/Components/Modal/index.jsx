@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -6,17 +7,74 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import axios from 'axios';
+
+
+
+const initialFValues = {
+  id: 0,
+  name:  '',
+  address:'',
+  city:  '',
+  state: '',
+  zip:    '',
+  country:'',
+}
 
 export default function FormEditRegister(props) {
-console.log(props);
+  const { recordForEdit } = props;
+  const [values, setValues] = useState(initialFValues);
+
+
+const [updateValues,setUpdateValues] = useState(() => {
+  if(recordForEdit)
+  setUpdateValues({
+    id:  props.recordForEdit.id,
+    name: props.recordForEdit.name,
+    address: props.recordForEdit.adress,
+    city: props.recordForEdit.city,
+    state: props.recordForEdit.state,
+    zip: props.recordForEdit.postalcode,
+    country:  props.recordForEdit.country
+  })
+},[recordForEdit]);
+
+
+useEffect(() => {
+  if (recordForEdit != null)
+      setUpdateValues({
+          ...recordForEdit
+      })
+}, [recordForEdit])
 
   const handleClickOpen = () => {
     props.setOpen(true);
   };
 
+  const handleEdit = () => {
+    axios.put('http://localhost:3001/api/pacient/update/register/',{
+      id:     updateValues.id,
+      name:   updateValues.name,
+      address:updateValues.address,
+      city:   updateValues.city,
+      state:  updateValues.state,
+      zip:    updateValues.postalcode,
+      country:updateValues.country,
+    });
+    handleClose();
+  }
   const handleClose = () => {
     props.setOpen(false);
   };
+
+  const hadleUpdate = (value) => {
+    console.log("value",value);
+    setUpdateValues(prevValues=>({
+      ...prevValues,
+      [value.target.id] : value.target.value
+    }))
+
+  }
 
   return (
     <div>
@@ -30,6 +88,7 @@ console.log(props);
             label="Name"
             type="email"
             defaultValue={props.recordForEdit == null ? "name" : props.recordForEdit.name}
+            onChange = {hadleUpdate}
             fullWidth
             variant="standard"
           />
@@ -39,6 +98,7 @@ console.log(props);
             id="address"
             label="Address"
             type="text"
+            onChange={hadleUpdate}
             defaultValue={props.recordForEdit == null ? "Address" : props.recordForEdit.adress}
             fullWidth
             variant="standard"
@@ -50,6 +110,7 @@ console.log(props);
             label="City"
             defaultValue={props.recordForEdit == null ? "City" : props.recordForEdit.city}
             type="text"
+            onChange={hadleUpdate}
             fullWidth
             variant="standard"
           />
@@ -60,6 +121,7 @@ console.log(props);
             label="City"
             defaultValue={props.recordForEdit == null ? "City" : props.recordForEdit.state}
             type="text"
+            onChange={hadleUpdate}
             fullWidth
             variant="standard"
           />
@@ -69,16 +131,18 @@ console.log(props);
             id="zip"
             label="Zip Code"
             type="text"
+            onChange={hadleUpdate}
             defaultValue={props.recordForEdit == null ? "Zip Code" : props.recordForEdit.postalcode}
             fullWidth
             variant="standard"
           />
-                    <TextField
+          <TextField
             autoFocus
             margin="dense"
             id="country"
             label="Country"
             defaultValue={props.recordForEdit == null ? "Country" : props.recordForEdit.country}
+            onChange={hadleUpdate}
             type="text"
             fullWidth
             variant="standard"
@@ -86,7 +150,7 @@ console.log(props);
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
+          <Button onClick={handleEdit}>Save</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -37,7 +37,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-export default function CustomizedTables() {
+export default function TablePacient() {
 const [registers, setRegisters] = useState([]);
 const [open, setOpen] = React.useState(false);
 const [recordForEdit, setRecordForEdit] = useState(null);
@@ -48,11 +48,17 @@ const OpenModalEdit = (row) => {
 }
 
 
+const HandleDeletePacient = (id) => {
+  axios.delete(`http://localhost:3001/api/pacient/delete/${id}`)
+}
+
+
+
   useEffect(() => {
     axios.get('http://localhost:3001/api/pacient/getRegisters/').then((response) => {
       setRegisters(response.data);
     })
-  })
+  },[registers])
   return (
     <>
         <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
@@ -60,7 +66,7 @@ const OpenModalEdit = (row) => {
    <Typography variant="h6" gutterBottom>
     Management
      </Typography>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+      <Table sx={{ minWidth: 700 }} aria-label="table pacient">
   
         <TableHead>
           <TableRow>
@@ -90,12 +96,13 @@ const OpenModalEdit = (row) => {
               <StyledTableCell align="center">{row.country}</StyledTableCell>
               <StyledTableCell align="center">
                 <IconButton aria-label="delete">
-                                              <DeleteIcon />
-                                              </IconButton>
-                                              <IconButton>
-                                              <ModeEditIcon  onClick= {() => OpenModalEdit(row) 
-                                              }/>
-                                              </IconButton>
+                    <DeleteIcon  onClick= {() => HandleDeletePacient(row.id) 
+                    } />
+                    </IconButton>
+                    <IconButton>
+                    <ModeEditIcon  onClick= {() => OpenModalEdit(row) 
+                    }/>
+                    </IconButton>
               </StyledTableCell>
             </StyledTableRow>
 
