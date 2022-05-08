@@ -34,7 +34,7 @@ export default function PacientForm() {
 }
 
   const saveRegister = () => {
-    axios.post('http://localhost:3001/api/pacient/', {
+    axios.post('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/', {
       name: values.name,
       email: values.email,
       adress: values.address,

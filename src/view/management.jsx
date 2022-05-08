@@ -49,13 +49,13 @@ const OpenModalEdit = (row) => {
 
 
 const HandleDeletePacient = (id) => {
-  axios.delete(`http://localhost:3001/api/pacient/delete/${id}`)
+  axios.delete(`https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/delete/${id}`)
 }
 
 
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/pacient/getRegisters/').then((response) => {
+    axios.get('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/getRegisters/').then((response) => {
       setRegisters(response.data);
     })
   },[registers])
@@ -66,7 +66,7 @@ const HandleDeletePacient = (id) => {
    <Typography variant="h6" gutterBottom>
     Management
      </Typography>
-      <Table sx={{ minWidth: 700 }} aria-label="table pacient">
+      <Table sx={{ minWidth: 700 }} aria-label="table patient">
   
         <TableHead>
           <TableRow>

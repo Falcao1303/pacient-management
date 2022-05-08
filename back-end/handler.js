@@ -1,3 +1,4 @@
+const serverless = require('serverless-http');
 const express = require('express')
 const conection = require('./db/connections')
 const cors = require('cors');
@@ -23,3 +24,5 @@ conection.connect(erro =>{
   })
 
 app.listen(3001,() => console.log('server started'))
+
+module.exports.backend = serverless(app);

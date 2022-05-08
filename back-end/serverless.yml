@@ -1,0 +1,14 @@
+org: falcao1303
+app: aws-node-http-api
+service: aws-node-http-api
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  api:
+    handler: handler.backend
+    events:
+      - httpApi: '*'

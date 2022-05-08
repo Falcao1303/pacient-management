@@ -52,7 +52,7 @@ useEffect(() => {
   };
 
   const handleEdit = () => {
-    axios.put('http://localhost:3001/api/pacient/update/register/',{
+    axios.put('http://localhost:3001/api/patient/update/register/',{
       id:     updateValues.id,
       name:   updateValues.name,
       address:updateValues.address,

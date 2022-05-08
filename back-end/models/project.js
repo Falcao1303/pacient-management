@@ -9,7 +9,7 @@ class Register {
         const state = data.state;
         const zip = data.zip;
         const country = data.country;
-        db.query('INSERT INTO pacients (name,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?)', [name,adress,city,state,zip,country], (err, results) => {
+        db.query('INSERT INTO patients (name,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?)', [name,adress,city,state,zip,country], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -20,7 +20,7 @@ class Register {
 
     
     lista(res){
-        const sql = 'SELECT * FROM pacients'
+        const sql = 'SELECT * FROM patients'
 
         db.query(sql,(err,response)=>{
             if(err){
@@ -43,7 +43,7 @@ class Register {
 
         console.log(name,adress,city,state,zip,country,id);
 
-        db.query('UPDATE pacients SET name = ?,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,adress,city,state,zip,country,id], (err, results) => {
+        db.query('UPDATE patients SET name = ?,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,adress,city,state,zip,country,id], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -54,7 +54,7 @@ class Register {
 
     delete(id){
         const idpacient = id.id;
-        db.query('DELETE FROM pacients WHERE id=? ', [idpacient], (err, results) => {
+        db.query('DELETE FROM patients WHERE id=? ', [idpacient], (err, results) => {
             if(err){
                 console.log(err)
             }else{
