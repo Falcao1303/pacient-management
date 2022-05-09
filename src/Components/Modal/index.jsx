@@ -55,6 +55,7 @@ useEffect(() => {
     axios.put('http://localhost:3001/api/patient/update/register/',{
       id:     updateValues.id,
       name:   updateValues.name,
+      name:   updateValues.email,
       address:updateValues.address,
       city:   updateValues.city,
       state:  updateValues.state,
@@ -88,6 +89,17 @@ useEffect(() => {
             label="Name"
             type="email"
             defaultValue={props.recordForEdit == null ? "name" : props.recordForEdit.name}
+            onChange = {hadleUpdate}
+            fullWidth
+            variant="standard"
+          />
+        <TextField
+            autoFocus
+            margin="dense"
+            id="name"
+            label="Name"
+            type="email"
+            defaultValue={props.recordForEdit == null ? "email" : props.recordForEdit.email}
             onChange = {hadleUpdate}
             fullWidth
             variant="standard"

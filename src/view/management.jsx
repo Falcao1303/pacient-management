@@ -72,6 +72,7 @@ const HandleDeletePacient = (id) => {
           <TableRow>
             <StyledTableCell>Pacient Id</StyledTableCell>
             <StyledTableCell align="center">Name</StyledTableCell>
+            <StyledTableCell align="center">E-mail</StyledTableCell>
             <StyledTableCell align="center">Adress</StyledTableCell>
             <StyledTableCell align="center">City</StyledTableCell>
             <StyledTableCell align="center">State</StyledTableCell>
@@ -89,6 +90,7 @@ const HandleDeletePacient = (id) => {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
+              <StyledTableCell align="center">{row.email}</StyledTableCell>
               <StyledTableCell align="center">{row.adress}</StyledTableCell>
               <StyledTableCell align="center">{row.city}</StyledTableCell>
               <StyledTableCell align="center">{row.state}</StyledTableCell>

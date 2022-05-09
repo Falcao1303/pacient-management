@@ -8,10 +8,12 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 
 
+
 const initialFValues = {
   id: '',
   name:  '',
   address:'',
+  email: '',
   city:  '',
   state: '',
   zip:    '',
@@ -37,13 +39,13 @@ export default function PacientForm() {
     axios.post('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/', {
       name: values.name,
       email: values.email,
+      datebirth: values.datebirth,
       adress: values.address,
       city: values.city,
       state: values.state,
       zip: values.zip,
       country: values.country,
     }).then((response) => {
-      console.log("sucesso");
       resetForm();
     })
   }
@@ -56,7 +58,7 @@ export default function PacientForm() {
         Register
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={10} sm={10}>
+        <Grid item xs={10} sm={6}>
           <TextField
             required
             id="name"
@@ -69,6 +71,19 @@ export default function PacientForm() {
             variant="standard"
             onChange={handleaddValues}
           />
+        </Grid>
+        <Grid item xs={10} sm={5}>
+        <TextField
+            id="date"
+            label="Birthday"
+            name="datebirth"
+            value = {values.datebirth}
+            type="date"
+            sx={{ width: 220 }}
+            InputLabelProps={{
+              shrink: true,
+            }}
+        />
         </Grid>
         <Grid item xs={10} sm={6}>
           <TextField
@@ -84,7 +99,17 @@ export default function PacientForm() {
           />
         </Grid>
         <Grid item xs={10} sm={6}>
-        
+        <TextField
+            required
+            id="email"
+            name="email"
+            value = {values.email}
+            label="E-mail"
+            fullWidth
+            autoComplete="shipping address-line1"
+            variant="standard"
+            onChange={handleaddValues}
+          />
         </Grid>
         <Grid item xs={10} sm={6}>
           <TextField
