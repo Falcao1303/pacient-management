@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 
 
@@ -14,6 +16,7 @@ const initialFValues = {
   name:  '',
   address:'',
   email: '',
+  datebirth: 'dd/mm/aaaa',
   city:  '',
   state: '',
   zip:    '',
@@ -21,7 +24,7 @@ const initialFValues = {
 }
 export default function PacientForm() {
   const [values, setValues] = useState(initialFValues);
-  
+  const [errors, setErrors] = useState({});
 
   const handleaddValues = (value) => {
     setValues((prevValues) => ({
@@ -31,11 +34,33 @@ export default function PacientForm() {
   };
 
   const resetForm = () => {
-    console.log('reset chamou');
     setValues(initialFValues);
 }
 
+const validate = (fieldValues = values) => {
+  let temp = { ...errors }
+  if ('name' in fieldValues)
+      temp.Name = fieldValues.name ? "" : "This field name is required."
+  if ('email' in fieldValues)
+      temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
+  if ('address' in fieldValues)
+      temp.address = fieldValues.address ? "" : "This field adress is required."
+  if ('city' in fieldValues)
+      temp.city = fieldValues.city ? "" : "This field city is required."
+  if ('state' in fieldValues)
+      temp.state = fieldValues.state ? "" : "This field state is required."
+  if ('mobile' in fieldValues)
+      temp.zip = fieldValues.zip.length > 9 ? "" : "Minimum 10 numbers required in zipcode."
+  setErrors({
+      ...temp
+  })
+
+  if (fieldValues == values)
+      return [Object.values(temp).every(x => x == "")]
+}
+
   const saveRegister = () => {
+    if(validate()){
     axios.post('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/', {
       name: values.name,
       email: values.email,
@@ -48,16 +73,24 @@ export default function PacientForm() {
     }).then((response) => {
       resetForm();
     })
+    }else{
+      alert("Verificar se os campos estão preencidos corretamente.");
+    }
+
+
   }
 
   return (
 
     <React.Fragment>
     <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
+      
     <Typography variant="h6" gutterBottom>
         Register
       </Typography>
+      
       <Grid container spacing={2}>
+        
         <Grid item xs={10} sm={6}>
           <TextField
             required
@@ -77,12 +110,13 @@ export default function PacientForm() {
             id="date"
             label="Birthday"
             name="datebirth"
-            value = {values.datebirth}
+            value = {values.datebirth}  
             type="date"
             sx={{ width: 220 }}
             InputLabelProps={{
               shrink: true,
             }}
+            onChange={handleaddValues}
         />
         </Grid>
         <Grid item xs={10} sm={6}>

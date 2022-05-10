@@ -1,6 +1,6 @@
 const serverless = require('serverless-http');
 const express = require('express')
-const conection = require('./db/connections')
+const connection = require('./db/connections')
 const cors = require('cors');
 
 
@@ -14,8 +14,7 @@ app.use(express.urlencoded({ extended: true}))
 const route = require('./routes/routes')
 app.use('/api/', route)
 
-
-conection.connect(erro =>{
+connection.getConnection(erro =>{
     if(erro){
         console.log("erro ao conectar db!")
     }else{

@@ -1,15 +1,16 @@
 const db = require('../db/connections')
 
-
 class Register {
     save(data){
         const name = data.name;
+        const email = data.email
+        const birthdate = data.datebirth;
         const adress = data.adress;
         const city = data.city;
         const state = data.state;
         const zip = data.zip;
         const country = data.country;
-        db.query('INSERT INTO patients (name,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?)', [name,adress,city,state,zip,country], (err, results) => {
+        db.query('INSERT INTO patients (name,email,datebirth,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?,?,?)', [name,email,birthdate,adress,city,state,zip,country], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -20,7 +21,7 @@ class Register {
 
     
     lista(res){
-        const sql = 'SELECT * FROM patients'
+        const sql = 'SELECT id,name,email,DATE_FORMAT(datebirth, "%Y-%m-%d") as datebirth,adress,city,state,postalcode,country FROM patients'
 
         db.query(sql,(err,response)=>{
             if(err){
@@ -32,18 +33,16 @@ class Register {
     }
 
     update(data){
-        console.log("data",data);
         const id = data.id;
         const name = data.name;
-        const adress = data.address;
+        const email = data.email;
+        const birthdate = data.datebirth;
+        const address = data.address;
         const city = data.city;
         const state = data.state;
         const zip = data.zip;
         const country = data.country;
-
-        console.log(name,adress,city,state,zip,country,id);
-
-        db.query('UPDATE patients SET name = ?,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,adress,city,state,zip,country,id], (err, results) => {
+        db.query('UPDATE patients SET name = ?,email = ?,datebirth = ? ,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,email,birthdate,address,city,state,zip,country,id], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -70,4 +69,3 @@ class Register {
 
 
 module.exports = new Register;
-

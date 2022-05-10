@@ -54,25 +54,27 @@ const HandleDeletePacient = (id) => {
 
 
 
-  useEffect(() => {
+useState(() => {
     axios.get('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/getRegisters/').then((response) => {
       setRegisters(response.data);
     })
   },[registers])
+
   return (
     <>
-        <Container component="main" maxWidth="lg" sx={{ mb: 10 , w: -50}}>
-         <TableContainer component={Paper}  maxWidth="lg" sx={{ mb: 10 , w: -50}}>
+        <Container component="main" maxWidth="xlg" sx={{ mb: 10 , w: 50}}>
+         <TableContainer component={Paper}  maxWidth="xlg" sx={{ mb: 10 , w: 50}}>
    <Typography variant="h6" gutterBottom>
     Management
      </Typography>
-      <Table sx={{ minWidth: 700 }} aria-label="table patient">
+      <Table sx={{ minWidth: 800 }} aria-label="table patient">
   
         <TableHead>
           <TableRow>
             <StyledTableCell>Pacient Id</StyledTableCell>
             <StyledTableCell align="center">Name</StyledTableCell>
             <StyledTableCell align="center">E-mail</StyledTableCell>
+            <StyledTableCell align="center">Birth Date</StyledTableCell>
             <StyledTableCell align="center">Adress</StyledTableCell>
             <StyledTableCell align="center">City</StyledTableCell>
             <StyledTableCell align="center">State</StyledTableCell>
@@ -91,6 +93,7 @@ const HandleDeletePacient = (id) => {
                 {row.name}
               </StyledTableCell>
               <StyledTableCell align="center">{row.email}</StyledTableCell>
+              <StyledTableCell align="center">{row.datebirth}</StyledTableCell>
               <StyledTableCell align="center">{row.adress}</StyledTableCell>
               <StyledTableCell align="center">{row.city}</StyledTableCell>
               <StyledTableCell align="center">{row.state}</StyledTableCell>
@@ -115,7 +118,7 @@ const HandleDeletePacient = (id) => {
       </Table>
     </TableContainer>
     </Container>
-    <FormEditRegister open={open} setOpen= {setOpen}  recordForEdit={recordForEdit}/>
+    <FormEditRegister open={open} setOpen= {setOpen}  setRegisters = {setRegisters} Registers = {registers} recordForEdit={recordForEdit}/>
     </>
 
  

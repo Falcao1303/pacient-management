@@ -27,10 +27,13 @@ export default function FormEditRegister(props) {
 
 
 const [updateValues,setUpdateValues] = useState(() => {
+
   if(recordForEdit)
   setUpdateValues({
     id:  props.recordForEdit.id,
     name: props.recordForEdit.name,
+    email: props.recordForEdit.email,
+    datebirth: props.recordForEdit.datebirth,
     address: props.recordForEdit.adress,
     city: props.recordForEdit.city,
     state: props.recordForEdit.state,
@@ -52,17 +55,19 @@ useEffect(() => {
   };
 
   const handleEdit = () => {
-    axios.put('http://localhost:3001/api/patient/update/register/',{
+    axios.put('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/update/register/',{
       id:     updateValues.id,
       name:   updateValues.name,
-      name:   updateValues.email,
-      address:updateValues.address,
+      email:   updateValues.email,
+      datebirth: updateValues.date,
+      address: updateValues.address,
       city:   updateValues.city,
       state:  updateValues.state,
       zip:    updateValues.postalcode,
       country:updateValues.country,
     });
     handleClose();
+    props.setRegisters(props.registers);
   }
   const handleClose = () => {
     props.setOpen(false);
@@ -74,7 +79,6 @@ useEffect(() => {
       ...prevValues,
       [value.target.id] : value.target.value
     }))
-
   }
 
   return (
@@ -104,6 +108,18 @@ useEffect(() => {
             fullWidth
             variant="standard"
           />
+          <TextField
+            id="date"
+            label="Birthday"
+            name="datebirth"
+            defaultValue={props.recordForEdit == null ? "dd/MMM/yyyy" : props.recordForEdit.datebirth}
+            type="date"
+            sx={{ width: 200 , marginTop: "0.8rem"}}
+            onChange = {hadleUpdate}
+            InputLabelProps={{
+              shrink: true,
+            }}
+        />
                     <TextField
             autoFocus
             margin="dense"
