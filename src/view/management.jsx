@@ -54,11 +54,11 @@ const HandleDeletePacient = (id) => {
 
 
 
-useState(() => {
-    axios.get('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/getRegisters/').then((response) => {
+useEffect(async () => {
+    await axios.get('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/getRegisters/').then((response) => {
       setRegisters(response.data);
     })
-  },[registers])
+  },[registers]);
 
   return (
     <>

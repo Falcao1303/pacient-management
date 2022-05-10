@@ -56,7 +56,7 @@ const validate = (fieldValues = values) => {
   })
 
   if (fieldValues == values)
-      return [Object.values(temp).every(x => x == "")]
+      return Object.values(temp).every(x => x == "")
 }
 
   const saveRegister = () => {
@@ -71,10 +71,11 @@ const validate = (fieldValues = values) => {
       zip: values.zip,
       country: values.country,
     }).then((response) => {
+      alert("Cadastro Efetuado com Sucesso!");
       resetForm();
     })
     }else{
-      alert("Verificar se os campos estão preencidos corretamente.");
+      alert("Verificar se os campos estão preenchidos corretamente.");
     }
 
 
