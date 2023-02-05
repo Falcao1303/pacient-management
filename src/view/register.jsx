@@ -61,7 +61,7 @@ const validate = (fieldValues = values) => {
 
   const saveRegister = () => {
     if(validate()){
-    axios.post('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/', {
+    axios.post('http://localhost:3001/api/patient/', {
       name: values.name,
       email: values.email,
       datebirth: values.datebirth,

@@ -39,26 +39,38 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function TablePacient() {
 const [registers, setRegisters] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
 const [open, setOpen] = React.useState(false);
 const [recordForEdit, setRecordForEdit] = useState(null);
+
 
 const OpenModalEdit = (row) => {
     setRecordForEdit(row);
     setOpen(true);
 }
 
-
-const HandleDeletePacient = (id) => {
-  axios.delete(`https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/delete/${id}`)
-}
-
-
-
-useEffect(async () => {
-    await axios.get('https://0r21afw6u1.execute-api.us-east-1.amazonaws.com/api/patient/getRegisters/').then((response) => {
-      setRegisters(response.data);
+const HandleDeletePacient = async (id) => {
+  setIsLoading(true);
+  await axios.delete(`http://localhost:3001/api/patient/delete/${id}`)
+    .then((data) => {
+      console.log("DATA",data);
+      axios.get('http://localhost:3001/api/patient/getRegisters/').then((response) => {
+        setRegisters(response.data);
+        setIsLoading(false);
+        console.log("registros",registers);
+      });
     })
-  },[registers]);
+    .catch(error => {
+      console.error("teste erro",error);
+      setIsLoading(false);
+    });
+};
+
+useEffect(() => {
+  axios.get('http://localhost:3001/api/patient/getRegisters/').then((response) => {
+    setRegisters(response.data);
+  });
+}, []);
 
   return (
     <>
