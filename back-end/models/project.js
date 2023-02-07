@@ -10,7 +10,7 @@ class Register {
         const state = data.state;
         const zip = data.zip;
         const country = data.country;
-        db.query('INSERT INTO patients (name,email,datebirth,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?,?,?)', [name,email,birthdate,adress,city,state,zip,country], (err, results) => {
+        db.query('INSERT INTO clinic.patients (name,email,datebirth,adress,city,state,postalcode,country) VALUES (?,?,?,?,?,?,?,?)', [name,email,birthdate,adress,city,state,zip,country], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -21,7 +21,7 @@ class Register {
 
     
     lista(res){
-        const sql = 'SELECT id,name,email,DATE_FORMAT(datebirth, "%Y-%m-%d") as datebirth,adress,city,state,postalcode,country FROM patients'
+        const sql = 'SELECT id,name,email,DATE_FORMAT(datebirth, "%Y-%m-%d") as datebirth,adress,city,state,postalcode,country FROM clinic.patients'
 
         db.query(sql,(err,response)=>{
             if(err){
@@ -42,7 +42,7 @@ class Register {
         const state = data.state;
         const zip = data.zip;
         const country = data.country;
-        db.query('UPDATE patients SET name = ?,email = ?,datebirth = ? ,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,email,birthdate,address,city,state,zip,country,id], (err, results) => {
+        db.query('UPDATE clinic.patients SET name = ?,email = ?,datebirth = ? ,adress = ?,city = ?, state = ? ,postalcode = ?,country = ? WHERE id=? ', [name,email,birthdate,address,city,state,zip,country,id], (err, results) => {
             if(err){
                 console.log(err)
             }else{
@@ -51,14 +51,11 @@ class Register {
         })
     }
 
-    delete(id){
+    delete(id,res){
         const idpacient = id.id;
-        db.query('DELETE FROM patients WHERE id=? ', [idpacient], (err, results) => {
-            if(err){
-                console.log(err)
-            }else{
-               console.log(results);
-            }
+        db.query('DELETE FROM clinic.patients WHERE id=? ', [idpacient], (err, results) => {
+            if (err) return res.json(err);
+            return res.status(200).json("Usuário deletado com sucesso.");
         })
     }
 

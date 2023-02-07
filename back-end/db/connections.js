@@ -2,11 +2,11 @@ const mysql = require('mysql');
 
 
 let db = mysql.createPool({
-    host: 'mysqlserver.cr0n4ocjd4zx.us-east-1.rds.amazonaws.com',
-    port: 3306,
-    user: 'admin',
-    password: 'admin1234',
-    database: 'projects'
+    host: '127.0.0.1',
+    port: 3307,
+    user: 'root',
+    password: 'admin',
+    database: 'clinic'
 })
 
 module.exports = db;

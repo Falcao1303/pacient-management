@@ -12,7 +12,6 @@ const Register = require('../models/project')
     })
 
     route.get('/patient/getRegisters', (req,res) =>{
-        console.log("teste")
         Register.lista(res);
         res.status(200)
         req.end;
@@ -26,7 +25,7 @@ const Register = require('../models/project')
 
     route.delete('/patient/delete/:id', (req,res) =>{
         const id = req.params;
-        Register.delete(id);
+        Register.delete(id,res);
         res.status(200)
     })
 
